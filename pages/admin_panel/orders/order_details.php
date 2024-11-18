@@ -87,4 +87,7 @@ $stmt->close();
         <?php endforeach; ?>
     </div>
     <h4 class="bigger_h4 price_summary_od">Łączna cena zamówienia: <?= htmlspecialchars(number_format($order_details['total_price'], 2, ',', ' '), ENT_QUOTES, 'UTF-8') ?> zł</h4>
+    <h4><a class="order_delete_btn"
+           href="pages/admin_panel/orders/order_delete.php?order_id=<?= htmlspecialchars($order_id, ENT_QUOTES, 'UTF-8') ?>"><img src="assets/icons/delete.png" alt="Usuń"/> Usuń zamówienie</a></h4>
+
 </div>

@@ -105,14 +105,28 @@
     align-items: start;
 }
 
-.data_actions, .edit-btn, .delete-btn, .add-btn {
+.buttons_container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.order_delete_btn {
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    padding: 2px 4px;
+}
+
+.data_actions, .edit-btn, .delete-btn, .add-btn, .order_delete_btn {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.edit-btn, .delete-btn, .add-btn {
+.edit-btn, .delete-btn, .add-btn, .order_delete_btn {
     flex-direction: row;
 }
 
@@ -121,7 +135,7 @@
     gap: 1rem;
 }
 
-.edit-btn img, .delete-btn img, .add-btn img {
+.edit-btn img, .delete-btn img, .add-btn img, .order_delete_btn img {
     width: 25px;
     height: 25px;
     margin-right: 5px;

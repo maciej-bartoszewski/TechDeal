@@ -76,9 +76,13 @@ while ($order = $result->fetch_assoc()) {
                     <?php endforeach; ?>
                     <hr/>
                     <div class="bottom_container">
-                        <h4><a class="order_details_btn"
+                        <div class="buttons_container">
+                            <h4><a class="order_details_btn"
                                href="index.php?page=admin&subpage=order_details&order_id=<?= htmlspecialchars($order_id, ENT_QUOTES, 'UTF-8') ?>">Szczegóły
                                 zamówienia</a></h4>
+                            <h4><a class="order_delete_btn"
+                                   href="pages/admin_panel/orders/order_delete.php?order_id=<?= htmlspecialchars($order_id, ENT_QUOTES, 'UTF-8') ?>"><img src="assets/icons/delete.png" alt="Usuń"/> Usuń zamówienie</a></h4>
+                        </div>
                         <h4>Łącznie: <?= htmlspecialchars(number_format($order['total_price'], 2, ',', ' '), ENT_QUOTES, 'UTF-8') ?>zł</h4>
                     </div>
                 </div>
