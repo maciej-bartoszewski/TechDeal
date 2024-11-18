@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <form action="" method="POST">
     <div class="form_group">
         <label for="category_id">Kategoria</label>
-        <select id="category_id" name="category_id" class="select_in_product" required>
+        <select id="category_id" name="category_id"required>
             <option value="">Wybierz kategorię</option>
             <?php foreach ($categories as $category): ?>
                 <option value="<?= htmlspecialchars($category['category_id'], ENT_QUOTES, 'UTF-8') ?>" <?= $category_id == $category['category_id'] ? 'selected' : '' ?>>
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="form_group">
         <label for="producer_id">Producent</label>
-        <select id="producer_id" name="producer_id" class="select_in_product" required>
+        <select id="producer_id" name="producer_id" required>
             <option value="">Wybierz producenta</option>
             <?php foreach ($producers as $producer): ?>
                 <option value="<?= htmlspecialchars($producer['producer_id'], ENT_QUOTES, 'UTF-8') ?>" <?= $producer_id == $producer['producer_id'] ? 'selected' : '' ?>>

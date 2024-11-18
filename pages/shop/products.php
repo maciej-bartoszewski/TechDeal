@@ -81,7 +81,7 @@ $stmt_product->close();
             <div class="shop_options">
                 <div class="sort_section">
                     <h3>Sortuj według</h3>
-                    <select name="sort" id="sort">
+                    <select class="sort_select" name="sort" id="sort">
                         <option value="name_asc" <?php if ($sort == 'name_asc') echo 'selected'; ?>>Nazwa: Rosnąco
                         </option>
                         <option value="name_desc" <?php if ($sort == 'name_desc') echo 'selected'; ?>>Nazwa: Malejąco
