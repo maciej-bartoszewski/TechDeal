@@ -20,15 +20,15 @@ $result = $mysqli->query($query);
         <?php while ($payment = $result->fetch_assoc()): ?>
             <div class="data_container">
                 <div class="data_info">
-                    <p>Metoda płatności: <strong><?= htmlspecialchars($payment['payment_method']) ?> </strong></p>
-                    <img src="<?= htmlspecialchars($payment['image_path']) ?>" alt="Obraz metody płatności"
+                    <p>Metoda płatności: <strong><?= htmlspecialchars($payment['payment_method'], ENT_QUOTES, 'UTF-8') ?> </strong></p>
+                    <img src="<?= htmlspecialchars($payment['image_path'], ENT_QUOTES, 'UTF-8') ?>" alt="Obraz metody płatności"
                          class="data_img"/>
                 </div>
                 <div class="data_actions">
-                    <a href="index.php?page=admin&subpage=payment_edit&payment_id=<?= htmlspecialchars($payment['payment_id']) ?>"
+                    <a href="index.php?page=admin&subpage=payment_edit&payment_id=<?= htmlspecialchars($payment['payment_id'], ENT_QUOTES, 'UTF-8') ?>"
                        class="edit-btn">
                         <img src="assets/icons/edit.png" alt="Edytuj"/>Edytuj</a>
-                    <a href="pages/admin_panel/payments/payment_delete.php?id=<?= htmlspecialchars($payment['payment_id']) ?>"
+                    <a href="pages/admin_panel/payments/payment_delete.php?id=<?= htmlspecialchars($payment['payment_id'], ENT_QUOTES, 'UTF-8') ?>"
                        class="delete-btn">
                         <img src="assets/icons/delete.png" alt="Usuń"/> Usuń
                     </a>

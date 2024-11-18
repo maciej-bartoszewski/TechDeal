@@ -23,36 +23,36 @@ $stmt->bind_result($address_id, $country, $street, $building_number, $apartment_
         <div class="address">
             <div class="signle_info">
                 <h4>Kraj:</h4>
-                <p><?= htmlspecialchars($country) ?></p>
+                <p><?= htmlspecialchars($country, ENT_QUOTES, 'UTF-8') ?></p>
             </div>
             <div class="signle_info">
                 <h4>Ulica:</h4>
-                <p><?= htmlspecialchars($street) ?></p>
+                <p><?= htmlspecialchars($street, ENT_QUOTES, 'UTF-8') ?></p>
             </div>
             <div class="signle_info">
                 <h4>Numer budynku:</h4>
-                <p><?= htmlspecialchars($building_number) ?></p>
+                <p><?= htmlspecialchars($building_number, ENT_QUOTES, 'UTF-8') ?></p>
             </div>
             <div class="signle_info">
                 <h4>Numer mieszkania:</h4>
-                <p><?= htmlspecialchars($apartment_number ?: '-') ?></p>
+                <p><?= htmlspecialchars($apartment_number ?: '-', ENT_QUOTES, 'UTF-8') ?></p>
             </div>
             <div class="signle_info">
                 <h4>Kod pocztowy:</h4>
-                <p><?= htmlspecialchars($postal_code) ?></p>
+                <p><?= htmlspecialchars($postal_code, ENT_QUOTES, 'UTF-8') ?></p>
             </div>
             <div class="signle_info">
                 <h4>Miasto:</h4>
-                <p><?= htmlspecialchars($city) ?></p>
+                <p><?= htmlspecialchars($city, ENT_QUOTES, 'UTF-8') ?></p>
             </div>
             <div class="actions">
                 <div class="action">
-                    <a href="index.php?page=account&subpage=address_edit&user_id=<?= $user_id ?>&address_id=<?= $address_id ?>">
+                    <a href="index.php?page=account&subpage=address_edit&user_id=<?= htmlspecialchars($user_id, ENT_QUOTES, 'UTF-8') ?>&address_id=<?= htmlspecialchars($address_id, ENT_QUOTES, 'UTF-8') ?>">
                         <img src="assets/icons/edit.png" alt="Ikonka edycji"/>Edytuj
                     </a>
                 </div>
                 <div class="action">
-                    <a href="/techdeal/pages/account/address/address_delete.php?address_id=<?= $address_id ?>>">
+                    <a href="/techdeal/pages/account/address/address_delete.php?address_id=<?= htmlspecialchars($address_id, ENT_QUOTES, 'UTF-8') ?>">
                         <img src="assets/icons/delete.png" alt="Ikonka usuwania"/>Usuń
                     </a>
                 </div>

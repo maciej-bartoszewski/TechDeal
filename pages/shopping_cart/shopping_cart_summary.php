@@ -66,33 +66,36 @@ foreach ($cartItems as $item) {
                 <?php
                 $itemTotalPrice = (float)$item['price'] * (int)$item['quantity'];
                 ?>
-                <div class="product" data-price="<?php echo $item['price']; ?>"
-                     data-product-id="<?php echo $item['product_id']; ?>"
-                     data-stock-quantity="<?php echo $item['stock_quantity'] ?? ''; ?>">
+                <div class="product" data-price="<?php echo htmlspecialchars($item['price'], ENT_QUOTES, 'UTF-8'); ?>"
+                     data-product-id="<?php echo htmlspecialchars($item['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
+                     data-stock-quantity="<?php echo htmlspecialchars($item['stock_quantity'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                     <div class="cart_product_info">
-                        <img class="cart_product_img" src="<?php echo htmlspecialchars($item['image_path']); ?>"
+                        <img class="cart_product_img"
+                             src="<?php echo htmlspecialchars($item['image_path'], ENT_QUOTES, 'UTF-8'); ?>"
                              alt="Zdjęcie produktu"/>
-                        <h3 class="product_name"><?php echo htmlspecialchars($item['product_name']); ?></h3>
+                        <h3 class="product_name"><?php echo htmlspecialchars($item['product_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
                     </div>
                     <div class="right_product_info_container">
                         <form class="quantity_container" method="POST" action="pages/shopping_cart/update_cart.php">
-                            <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
+                            <input type="hidden" name="product_id"
+                                   value="<?php echo htmlspecialchars($item['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
 
                             <button type="submit" name="quantity_decrease" value="1" class="quantity_btn">−</button>
-                            <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>"
+                            <input type="number" name="quantity"
+                                   value="<?php echo htmlspecialchars($item['quantity'], ENT_QUOTES, 'UTF-8'); ?>"
                                    class="quantity_input" readonly/>
                             <button type="submit" name="quantity_increase" value="1" class="quantity_btn">+</button>
                         </form>
 
                         <div class="price_info">
                             <h4 class="item_price"
-                                data-item-total="<?php echo number_format($itemTotalPrice, 2, '.', ''); ?>">
-                                <?php echo number_format($itemTotalPrice, 2, ',', ' ') . ' zł'; ?>
+                                data-item-total="<?php echo htmlspecialchars(number_format($itemTotalPrice, 2, '.', ''), ENT_QUOTES, 'UTF-8'); ?>">
+                                <?php echo htmlspecialchars(number_format($itemTotalPrice, 2, ',', ' ') . ' zł', ENT_QUOTES, 'UTF-8'); ?>
                             </h4>
                             <p class="single_item_price">za
-                                sztukę <?php echo number_format($item['price'], 2, ',', ' ') . ' zł'; ?></p>
+                                sztukę <?php echo htmlspecialchars(number_format($item['price'], 2, ',', ' ') . ' zł', ENT_QUOTES, 'UTF-8'); ?></p>
                         </div>
-                        <a href="pages/shopping_cart/delete_cart_item.php?id=<?php echo $item['product_id']; ?>">
+                        <a href="pages/shopping_cart/delete_cart_item.php?id=<?php echo htmlspecialchars($item['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
                             <img class="delete_icon" src="assets/icons/delete_gray.png" alt="Ikona usuwania"/>
                         </a>
                     </div>
@@ -105,7 +108,7 @@ foreach ($cartItems as $item) {
                 <div class="upper_price_summary">
                     <div class="items_price_summary">
                         <h3>Wartość produktów:</h3>
-                        <p id="total_products_price"><?php echo number_format($totalPrice, 2, ',', ' ') . ' zł'; ?></p>
+                        <p id="total_products_price"><?php echo htmlspecialchars(number_format($totalPrice, 2, ',', ' ') . ' zł', ENT_QUOTES, 'UTF-8'); ?></p>
                     </div>
                     <div class="items_price_summary">
                         <h3>Dostawa:</h3>
@@ -115,7 +118,7 @@ foreach ($cartItems as $item) {
                 <hr/>
                 <div class="price_summary">
                     <h3>Razem z dostawą:</h3>
-                    <p id="total_price"><?php echo number_format($totalPrice, 2, ',', ' ') . ' zł'; ?></p>
+                    <p id="total_price"><?php echo htmlspecialchars(number_format($totalPrice, 2, ',', ' ') . ' zł', ENT_QUOTES, 'UTF-8'); ?></p>
                 </div>
             </div>
             <a class="gray_btn" href="index.php?page=shopping_cart&subpage=delivery">Dostawa i płatność</a>

@@ -13,7 +13,7 @@ $category_name = $category_map[$subpage];
 
 // Wyczyszczenie filtorw
 if (isset($_GET['clear_filters'])) {
-    header('Location: ' . $_SERVER['PHP_SELF'] . '?page=shop&subpage=' . $subpage);
+    header('Location: ' . $_SERVER['PHP_SELF'] . '?page=shop&subpage=' . htmlspecialchars($subpage, ENT_QUOTES, 'UTF-8'));
     exit;
 }
 
@@ -77,15 +77,19 @@ $stmt_product->close();
     <div class="product_section_container">
         <form method="GET" action="index.php">
             <input type="hidden" name="page" value="shop">
-            <input type="hidden" name="subpage" value="<?php echo htmlspecialchars($subpage); ?>">
+            <input type="hidden" name="subpage" value="<?php echo htmlspecialchars($subpage, ENT_QUOTES, 'UTF-8'); ?>">
             <div class="shop_options">
                 <div class="sort_section">
                     <h3>Sortuj według</h3>
                     <select name="sort" id="sort">
-                        <option value="name_asc" <?php if ($sort == 'name_asc') echo 'selected'; ?>>Nazwa: Rosnąco</option>
-                        <option value="name_desc" <?php if ($sort == 'name_desc') echo 'selected'; ?>>Nazwa: Malejąco</option>
-                        <option value="price_asc" <?php if ($sort == 'price_asc') echo 'selected'; ?>>Cena: Rosnąco</option>
-                        <option value="price_desc" <?php if ($sort == 'price_desc') echo 'selected'; ?>>Cena: Malejąco</option>
+                        <option value="name_asc" <?php if ($sort == 'name_asc') echo 'selected'; ?>>Nazwa: Rosnąco
+                        </option>
+                        <option value="name_desc" <?php if ($sort == 'name_desc') echo 'selected'; ?>>Nazwa: Malejąco
+                        </option>
+                        <option value="price_asc" <?php if ($sort == 'price_asc') echo 'selected'; ?>>Cena: Rosnąco
+                        </option>
+                        <option value="price_desc" <?php if ($sort == 'price_desc') echo 'selected'; ?>>Cena: Malejąco
+                        </option>
                         <option value="newest" <?php if ($sort == 'newest') echo 'selected'; ?>>Najnowsze</option>
                     </select>
                     <button type="submit" class="gray_btn">Sortuj</button>
@@ -97,8 +101,9 @@ $stmt_product->close();
                         <?php if ($brands_result->num_rows != 0): ?>
                             <?php while ($brand = $brands_result->fetch_assoc()): ?>
                                 <label>
-                                    <input type="checkbox" name="brand[]" value="<?php echo $brand['producer_id']; ?>" <?php if (in_array($brand['producer_id'], $selected_brands)) echo 'checked'; ?> />
-                                    <span class="checkbox"></span> <?php echo $brand['producer_name']; ?>
+                                    <input type="checkbox" name="brand[]"
+                                           value="<?php echo htmlspecialchars($brand['producer_id'], ENT_QUOTES, 'UTF-8'); ?>" <?php if (in_array($brand['producer_id'], $selected_brands)) echo 'checked'; ?> />
+                                    <span class="checkbox"></span> <?php echo htmlspecialchars($brand['producer_name'], ENT_QUOTES, 'UTF-8'); ?>
                                 </label>
                             <?php endwhile; ?>
                         <?php endif; ?>
@@ -107,9 +112,11 @@ $stmt_product->close();
                     <div class="filter_group">
                         <h3>Cena</h3>
                         <label for="min-price">Minimalna cena:</label>
-                        <input type="number" id="min-price" name="min-price" placeholder="0" min="0" value="<?php echo $min_price; ?>"/>
+                        <input type="number" id="min-price" name="min-price" placeholder="0" min="0"
+                               value="<?php echo htmlspecialchars($min_price, ENT_QUOTES, 'UTF-8'); ?>"/>
                         <label for="max-price">Maksymalna cena:</label>
-                        <input type="number" id="max-price" name="max-price" placeholder="10 000" min="0" value="<?php echo $max_price; ?>"/>
+                        <input type="number" id="max-price" name="max-price" placeholder="10 000" min="0"
+                               value="<?php echo htmlspecialchars($max_price, ENT_QUOTES, 'UTF-8'); ?>"/>
                     </div>
                     <hr/>
                     <button type="submit" class="gray_btn">Filtruj</button>
@@ -121,14 +128,19 @@ $stmt_product->close();
             <div class="products">
                 <?php if ($products_result->num_rows != 0): ?>
                     <?php while ($product = $products_result->fetch_assoc()): ?>
-                        <div class="product_card" id="product_<?php echo $product['product_id']; ?>">
-                            <img src="<?php echo htmlspecialchars($product['image_path']); ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?>" class="product_image"/>
-                            <h3 class="product_title"><?php echo htmlspecialchars($product['product_name']); ?></h3>
-                            <p class="product_price"><?php echo number_format($product['price'], 2, ',', ' ') . ' zł'; ?></p>
+                        <div class="product_card"
+                             id="product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <img src="<?php echo htmlspecialchars($product['image_path'], ENT_QUOTES, 'UTF-8'); ?>"
+                                 alt="<?php echo htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8'); ?>"
+                                 class="product_image"/>
+                            <h3 class="product_title"><?php echo htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                            <p class="product_price"><?php echo htmlspecialchars(number_format($product['price'], 2, ',', ' ') . ' zł', ENT_QUOTES, 'UTF-8'); ?></p>
                             <div class="product_links">
-                                <a href="index.php?page=shop&subpage=product&id=<?php echo $product['product_id']; ?>" class="product_link">Dowiedz się więcej</a>
+                                <a href="index.php?page=shop&subpage=product&id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
+                                   class="product_link">Dowiedz się więcej</a>
                                 <?php if ($product['stock_quantity'] != 0): ?>
-                                    <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo $product['product_id']; ?>#product_<?php echo $product['product_id']; ?>" class="product_link gray add-to-cart">Dodaj do koszyka</a>
+                                    <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>#product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
+                                       class="product_link gray add-to-cart">Dodaj do koszyka</a>
                                 <?php endif; ?>
                             </div>
                         </div>

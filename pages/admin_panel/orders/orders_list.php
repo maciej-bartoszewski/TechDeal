@@ -46,7 +46,7 @@ while ($order = $result->fetch_assoc()) {
 <form class="admin_search_container" method="GET" action="index.php">
     <input type="hidden" name="page" value="admin">
     <input type="hidden" name="subpage" value="orders_list">
-    <input type="text" name="order_id" placeholder="Wyszukaj po numerze zamówienia" value="<?= htmlspecialchars($search_order_id) ?>"/>
+    <input type="text" name="order_id" placeholder="Wyszukaj po numerze zamówienia" value="<?= htmlspecialchars($search_order_id, ENT_QUOTES, 'UTF-8') ?>"/>
     <button class="search_btn" type="submit">Szukaj</button>
 </form>
 
@@ -58,28 +58,28 @@ while ($order = $result->fetch_assoc()) {
             <div class="order">
                 <div class="order_items">
                     <div class="order_info">
-                        <p>Nr. zamówienia: <?= htmlspecialchars($order_id) ?></p>
-                        <p>Data zamówienia: <?= htmlspecialchars(date('d.m.Y', strtotime($order['order_date']))) ?></p>
+                        <p>Nr. zamówienia: <?= htmlspecialchars($order_id, ENT_QUOTES, 'UTF-8') ?></p>
+                        <p>Data zamówienia: <?= htmlspecialchars(date('d.m.Y', strtotime($order['order_date'])), ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                     <hr/>
                     <?php foreach ($order['items'] as $item): ?>
                         <div class="order_item">
                             <div class="item_datails">
-                                <img src="<?= htmlspecialchars($item['image_path']) ?>" alt="Zdjęcie produktu"/>
-                                <h4><?= htmlspecialchars($item['product_name']) ?></h4>
+                                <img src="<?= htmlspecialchars($item['image_path'], ENT_QUOTES, 'UTF-8') ?>" alt="Zdjęcie produktu"/>
+                                <h4><?= htmlspecialchars($item['product_name'], ENT_QUOTES, 'UTF-8') ?></h4>
                             </div>
                             <div class="item_price_details">
-                                <h4><?= htmlspecialchars(number_format($item['price'], 2, ',', ' ')) ?>zł</h4>
-                                <p>Ilość: <?= htmlspecialchars($item['quantity']) ?></p>
+                                <h4><?= htmlspecialchars(number_format($item['price'], 2, ',', ' '), ENT_QUOTES, 'UTF-8') ?>zł</h4>
+                                <p>Ilość: <?= htmlspecialchars($item['quantity'], ENT_QUOTES, 'UTF-8') ?></p>
                             </div>
                         </div>
                     <?php endforeach; ?>
                     <hr/>
                     <div class="bottom_container">
                         <h4><a class="order_details_btn"
-                               href="index.php?page=admin&subpage=order_details&order_id=<?= htmlspecialchars($order_id) ?>">Szczegóły
+                               href="index.php?page=admin&subpage=order_details&order_id=<?= htmlspecialchars($order_id, ENT_QUOTES, 'UTF-8') ?>">Szczegóły
                                 zamówienia</a></h4>
-                        <h4>Łącznie: <?= htmlspecialchars(number_format($order['total_price'], 2, ',', ' ')) ?>zł</h4>
+                        <h4>Łącznie: <?= htmlspecialchars(number_format($order['total_price'], 2, ',', ' '), ENT_QUOTES, 'UTF-8') ?>zł</h4>
                     </div>
                 </div>
             </div>

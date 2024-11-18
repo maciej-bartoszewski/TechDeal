@@ -62,16 +62,16 @@ $producers_result = $mysqli->query($producers_query);
             <div class="products">
                 <?php if ($best_sellers_result->num_rows > 0): ?>
                     <?php while ($product = $best_sellers_result->fetch_assoc()): ?>
-                        <div class="product_card" id="product_<?php echo $product['product_id']; ?>">
-                            <img src="<?php echo htmlspecialchars($product['image_path']); ?>"
-                                 alt="<?php echo htmlspecialchars($product['product_name']); ?>" class="product_image"/>
-                            <h3 class="product_title"><?php echo htmlspecialchars($product['product_name']); ?></h3>
+                        <div class="product_card" id="product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <img src="<?php echo htmlspecialchars($product['image_path'], ENT_QUOTES, 'UTF-8'); ?>"
+                                 alt="<?php echo htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8'); ?>" class="product_image"/>
+                            <h3 class="product_title"><?php echo htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
                             <p class="product_price"><?php echo number_format($product['price'], 2, ',', ' ') . ' zł'; ?></p>
                             <div class="product_links">
-                                <a href="index.php?page=shop&subpage=product&id=<?php echo $product['product_id']; ?>"
+                                <a href="index.php?page=shop&subpage=product&id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
                                    class="product_link">Dowiedz się więcej</a>
                                 <?php if ($product['stock_quantity'] != 0): ?>
-                                    <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo $product['product_id']; ?>#product_<?php echo $product['product_id']; ?>"
+                                    <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>#product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
                                        class="product_link gray add-to-cart">Dodaj do koszyka</a>
                                 <?php endif; ?>
                             </div>
@@ -89,16 +89,16 @@ $producers_result = $mysqli->query($producers_query);
             <div class="products">
                 <?php if ($latest_products_result->num_rows > 0): ?>
                     <?php while ($product = $latest_products_result->fetch_assoc()): ?>
-                        <div class="product_card" id="product_<?php echo $product['product_id']; ?>">
-                            <img src="<?php echo htmlspecialchars($product['image_path']); ?>"
-                                 alt="<?php echo htmlspecialchars($product['product_name']); ?>" class="product_image"/>
-                            <h3 class="product_title"><?php echo htmlspecialchars($product['product_name']); ?></h3>
+                        <div class="product_card" id="product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <img src="<?php echo htmlspecialchars($product['image_path'], ENT_QUOTES, 'UTF-8'); ?>"
+                                 alt="<?php echo htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8'); ?>" class="product_image"/>
+                            <h3 class="product_title"><?php echo htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8'); ?></h3>
                             <p class="product_price"><?php echo number_format($product['price'], 2, ',', ' ') . ' zł'; ?></p>
                             <div class="product_links">
-                                <a href="index.php?page=shop&subpage=product&id=<?php echo $product['product_id']; ?>"
+                                <a href="index.php?page=shop&subpage=product&id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
                                    class="product_link">Dowiedz się więcej</a>
                                 <?php if ($product['stock_quantity'] != 0): ?>
-                                    <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo $product['product_id']; ?>#product_<?php echo $product['product_id']; ?>"
+                                    <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>#product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
                                        class="product_link gray add-to-cart">Dodaj do koszyka</a>
                                 <?php endif; ?>
                             </div>
@@ -141,7 +141,7 @@ $producers_result = $mysqli->query($producers_query);
             <div class="brands_images">
                 <?php if ($producers_result->num_rows > 0) {
                     while ($row = $producers_result->fetch_assoc()) {
-                        echo '<img src="' . htmlspecialchars($row['image_path']) . '" alt="' . htmlspecialchars($row['producer_name']) . ' logo"/>';
+                        echo '<img src="' . htmlspecialchars($row['image_path'], ENT_QUOTES, 'UTF-8') . '" alt="' . htmlspecialchars($row['producer_name'], ENT_QUOTES, 'UTF-8') . ' logo"/>';
                     }
                 } else {
                     echo "<p>Brak dostępnych marek.</p>";

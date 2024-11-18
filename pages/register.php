@@ -97,41 +97,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="login_register_container">
     <h2>Zarejestruj się</h2>
 
-    <form action="index.php?page=register" onsubmit="return validateRegistration()" method="POST" >
+    <form action="index.php?page=register" onsubmit="return validateRegistration()" method="POST">
         <div class="form_group">
             <label for="first_name">Imię</label>
-            <input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars($first_name) ?>"/>
-            <span class="error"><?= $errors['first_name'] ?? '' ?></span>
+            <input type="text" id="first_name" name="first_name"
+                   value="<?= htmlspecialchars($first_name, ENT_QUOTES, 'UTF-8') ?>"/>
+            <span class="error"><?= htmlspecialchars($errors['first_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
         </div>
 
         <div class="form_group">
             <label for="last_name">Nazwisko</label>
-            <input type="text" id="last_name" name="last_name" value="<?= htmlspecialchars($last_name) ?>"/>
-            <span class="error"><?= $errors['last_name'] ?? '' ?></span>
+            <input type="text" id="last_name" name="last_name"
+                   value="<?= htmlspecialchars($last_name, ENT_QUOTES, 'UTF-8') ?>"/>
+            <span class="error"><?= htmlspecialchars($errors['last_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
         </div>
 
         <div class="form_group">
             <label for="e-mail">E-mail</label>
-            <input type="email" id="e-mail" name="e-mail" value="<?= htmlspecialchars($email) ?>"/>
-            <span class="error"><?= $errors['email'] ?? '' ?></span>
+            <input type="email" id="e-mail" name="e-mail"
+                   value="<?= htmlspecialchars($email, ENT_QUOTES, 'UTF-8') ?>"/>
+            <span class="error"><?= htmlspecialchars($errors['email'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
         </div>
 
         <div class="form_group">
             <label for="phone_number">Numer telefonu</label>
-            <input type="text" id="phone_number" name="phone_number" value="<?= htmlspecialchars($phone_number) ?>"/>
-            <span class="error"><?= $errors['phone_number'] ?? '' ?></span>
+            <input type="text" id="phone_number" name="phone_number"
+                   value="<?= htmlspecialchars($phone_number, ENT_QUOTES, 'UTF-8') ?>"/>
+            <span class="error"><?= htmlspecialchars($errors['phone_number'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
         </div>
 
         <div class="form_group">
             <label for="password">Hasło</label>
             <input type="password" id="password" name="password"/>
-            <span class="error"><?= $errors['password'] ?? '' ?></span>
+            <span class="error"><?= htmlspecialchars($errors['password'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
         </div>
 
         <div class="form_group">
             <label for="repeated_password">Powtórz hasło</label>
             <input type="password" id="repeated_password" name="repeated_password"/>
-            <span class="error"><?= $errors['repeated_password'] ?? '' ?></span>
+            <span class="error"><?= htmlspecialchars($errors['repeated_password'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
         </div>
 
         <button type="submit" class="red_button">Zarejestruj</button>

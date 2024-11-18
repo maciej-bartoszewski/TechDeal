@@ -20,15 +20,15 @@ $result = $mysqli->query($query);
         <?php while ($producer = $result->fetch_assoc()): ?>
             <div class="data_container">
                 <div class="data_info">
-                    <p>Producent: <strong><?= htmlspecialchars($producer['producer_name']) ?> </strong></p>
-                    <img src="<?= htmlspecialchars($producer['image_path']) ?>" alt="Obraz producenta"
+                    <p>Producent: <strong><?= htmlspecialchars($producer['producer_name'], ENT_QUOTES, 'UTF-8') ?> </strong></p>
+                    <img src="<?= htmlspecialchars($producer['image_path'], ENT_QUOTES, 'UTF-8') ?>" alt="Obraz producenta"
                          class="data_img"/>
                 </div>
                 <div class="data_actions">
-                    <a href="index.php?page=admin&subpage=producer_edit&producer_id=<?= htmlspecialchars($producer['producer_id']) ?>"
+                    <a href="index.php?page=admin&subpage=producer_edit&producer_id=<?= htmlspecialchars($producer['producer_id'], ENT_QUOTES, 'UTF-8') ?>"
                        class="edit-btn">
                         <img src="assets/icons/edit.png" alt="Edytuj"/>Edytuj</a>
-                    <a href="pages/admin_panel/producers/producer_delete.php?id=<?= htmlspecialchars($producer['producer_id']) ?>"
+                    <a href="pages/admin_panel/producers/producer_delete.php?id=<?= htmlspecialchars($producer['producer_id'], ENT_QUOTES, 'UTF-8') ?>"
                        class="delete-btn">
                         <img src="assets/icons/delete.png" alt="Usuń"/> Usuń
                     </a>

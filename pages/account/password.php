@@ -57,19 +57,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="form_group">
         <label for="current_password">Aktualne hasło</label>
         <input type="password" id="current_password" name="current_password"/>
-        <span class="error"><?= $errors['current_password'] ?? '' ?></span>
+        <span class="error"><?= htmlspecialchars($errors['current_password'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="new_password">Nowe hasło</label>
         <input type="password" id="new_password" name="new_password"/>
-        <span class="error"><?= $errors['new_password'] ?? '' ?></span>
+        <span class="error"><?= htmlspecialchars($errors['new_password'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="repeated_new_password">Powtórz hasło</label>
         <input type="password" id="repeated_new_password" name="repeated_new_password"/>
-        <span class="error"><?= $errors['repeated_new_password'] ?? '' ?></span>
+        <span class="error"><?= htmlspecialchars($errors['repeated_new_password'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <button type="submit" class="red_button">Zaktualizuj hasło</button>

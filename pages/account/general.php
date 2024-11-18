@@ -78,26 +78,26 @@ $stmt->close();
 <form action="index.php?page=account&subpage=general" method="POST" onsubmit="return validateAccountUpdate()">
     <div class="form_group">
         <label for="first_name">Imię</label>
-        <input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars($first_name) ?>" />
-        <span class="error"><?= $errors['first_name'] ?? '' ?></span>
+        <input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars($first_name, ENT_QUOTES, 'UTF-8') ?>" />
+        <span class="error"><?= htmlspecialchars($errors['first_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="last_name">Nazwisko</label>
-        <input type="text" id="last_name" name="last_name" value="<?= htmlspecialchars($last_name) ?>" />
-        <span class="error"><?= $errors['last_name'] ?? '' ?></span>
+        <input type="text" id="last_name" name="last_name" value="<?= htmlspecialchars($last_name, ENT_QUOTES, 'UTF-8') ?>" />
+        <span class="error"><?= htmlspecialchars($errors['last_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="e_mail">E-mail</label>
-        <input type="email" id="e_mail" name="e_mail" value="<?= htmlspecialchars($db_email) ?>" />
-        <span class="error"><?= $errors['email'] ?? '' ?></span>
+        <input type="email" id="e_mail" name="e_mail" value="<?= htmlspecialchars($db_email, ENT_QUOTES, 'UTF-8') ?>" />
+        <span class="error"><?= htmlspecialchars($errors['email'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="phone_number">Numer telefonu</label>
-        <input type="text" id="phone_number" name="phone_number" value="<?= htmlspecialchars($phone_number) ?>" />
-        <span class="error"><?= $errors['phone_number'] ?? '' ?></span>
+        <input type="text" id="phone_number" name="phone_number" value="<?= htmlspecialchars($phone_number, ENT_QUOTES, 'UTF-8') ?>" />
+        <span class="error"><?= htmlspecialchars($errors['phone_number'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <button type="submit" class="red_button">Zaktualizuj konto</button>

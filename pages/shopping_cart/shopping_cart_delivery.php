@@ -83,31 +83,31 @@ foreach ($cartItems as $item) {
             </div>
             <?php foreach ($addresses as $index => $address): ?>
                 <div class="address <?= $index === 0 ? 'active' : 'non_active' ?>"
-                     data-address-id="<?= $address['address_id'] ?>"
-                     onclick="saveAddress(<?= $address['address_id'] ?>, this)">
+                     data-address-id="<?= htmlspecialchars($address['address_id'], ENT_QUOTES, 'UTF-8') ?>"
+                     onclick="saveAddress(<?= htmlspecialchars($address['address_id'], ENT_QUOTES, 'UTF-8') ?>, this)">
                     <div class="single_info">
                         <h4>Kraj:</h4>
-                        <p><?= htmlspecialchars($address['country']) ?></p>
+                        <p><?= htmlspecialchars($address['country'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                     <div class="single_info">
                         <h4>Ulica:</h4>
-                        <p><?= htmlspecialchars($address['street']) ?></p>
+                        <p><?= htmlspecialchars($address['street'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                     <div class="single_info">
                         <h4>Numer budynku:</h4>
-                        <p><?= htmlspecialchars($address['building_number']) ?></p>
+                        <p><?= htmlspecialchars($address['building_number'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                     <div class="single_info">
                         <h4>Numer mieszkania:</h4>
-                        <p><?= htmlspecialchars($address['apartment_number']) ?></p>
+                        <p><?= htmlspecialchars($address['apartment_number'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                     <div class="single_info">
                         <h4>Kod pocztowy:</h4>
-                        <p><?= htmlspecialchars($address['postal_code']) ?></p>
+                        <p><?= htmlspecialchars($address['postal_code'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                     <div class="single_info">
                         <h4>Miasto:</h4>
-                        <p><?= htmlspecialchars($address['city']) ?></p>
+                        <p><?= htmlspecialchars($address['city'], ENT_QUOTES, 'UTF-8') ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -117,11 +117,11 @@ foreach ($cartItems as $item) {
         <div class="payment_methods">
             <?php foreach ($payment_methods as $index => $payment): ?>
                 <div class="payment_method <?= $index === 0 ? 'active' : 'non_active' ?>"
-                     data-payment-id="<?= $payment['payment_id'] ?>"
-                     onclick="savePayment(<?= $payment['payment_id'] ?>, this)">
-                    <img src="<?= htmlspecialchars($payment['image_path']) ?>"
-                         alt="<?= htmlspecialchars($payment['payment_method']) ?>"/>
-                    <p><?= htmlspecialchars($payment['payment_method']) ?></p>
+                     data-payment-id="<?= htmlspecialchars($payment['payment_id'], ENT_QUOTES, 'UTF-8') ?>"
+                     onclick="savePayment(<?= htmlspecialchars($payment['payment_id'], ENT_QUOTES, 'UTF-8') ?>, this)">
+                    <img src="<?= htmlspecialchars($payment['image_path'], ENT_QUOTES, 'UTF-8') ?>"
+                         alt="<?= htmlspecialchars($payment['payment_method'], ENT_QUOTES, 'UTF-8') ?>"/>
+                    <p><?= htmlspecialchars($payment['payment_method'], ENT_QUOTES, 'UTF-8') ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -132,7 +132,7 @@ foreach ($cartItems as $item) {
             <div class="upper_price_summary">
                 <div class="items_price_summary">
                     <h3>Wartość produktów:</h3>
-                    <p><?= number_format($totalPrice, 2, ',', ' ') ?> zł</p>
+                    <p><?= htmlspecialchars(number_format($totalPrice, 2, ',', ' '), ENT_QUOTES, 'UTF-8') ?> zł</p>
                 </div>
                 <div class="items_price_summary">
                     <h3>Dostawa:</h3>
@@ -142,13 +142,15 @@ foreach ($cartItems as $item) {
             <hr/>
             <div class="price_summary">
                 <h3>Razem z dostawą:</h3>
-                <p><?= number_format($totalPrice, 2, ',', ' ') ?> zł</p>
+                <p><?= htmlspecialchars(number_format($totalPrice, 2, ',', ' '), ENT_QUOTES, 'UTF-8') ?> zł</p>
             </div>
         </div>
         <form method="POST" action="pages/shopping_cart/place_order.php">
-            <input type="hidden" name="total_price" value="<?= htmlspecialchars($totalPrice) ?>">
-            <input type="hidden" name="address_id" id="selected_address_id" value="<?= $default_address_id ?>">
-            <input type="hidden" name="payment_id" id="selected_payment_id" value="<?= $default_payment_id ?>">
+            <input type="hidden" name="total_price" value="<?= htmlspecialchars($totalPrice, ENT_QUOTES, 'UTF-8') ?>">
+            <input type="hidden" name="address_id" id="selected_address_id"
+                   value="<?= htmlspecialchars($default_address_id, ENT_QUOTES, 'UTF-8') ?>">
+            <input type="hidden" name="payment_id" id="selected_payment_id"
+                   value="<?= htmlspecialchars($default_payment_id, ENT_QUOTES, 'UTF-8') ?>">
             <button type="submit" class="gray_btn">Złóż zamówienie</button>
         </form>
     </div>

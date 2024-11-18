@@ -82,38 +82,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <form action="" method="POST" onsubmit="return validateAddress()">
     <div class="form_group">
         <label for="country">Kraj</label>
-        <input type="text" id="country" name="country" value="<?= htmlspecialchars($country) ?>"/>
-        <span class="error"><?= $errors['country'] ?? '' ?></span>
+        <input type="text" id="country" name="country" value="<?= htmlspecialchars($country, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['country'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="street">Ulica</label>
-        <input type="text" id="street" name="street" value="<?= htmlspecialchars($street) ?>"/>
-        <span class="error"><?= $errors['street'] ?? '' ?></span>
+        <input type="text" id="street" name="street" value="<?= htmlspecialchars($street, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['street'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="building_number">Numer budynku</label>
-        <input type="number" id="building_number" name="building_number" value="<?= htmlspecialchars($building_number) ?>"/>
-        <span class="error"><?= $errors['building_number'] ?? '' ?></span>
+        <input type="number" id="building_number" name="building_number" value="<?= htmlspecialchars($building_number, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['building_number'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="apartment_number">Numer mieszkania</label>
-        <input type="number" id="apartment_number" name="apartment_number" value="<?= htmlspecialchars($apartment_number) ?>"/>
-        <span class="error"><?= $errors['apartment_number'] ?? '' ?></span>
+        <input type="number" id="apartment_number" name="apartment_number" value="<?= htmlspecialchars($apartment_number, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['apartment_number'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="post_code">Kod pocztowy</label>
-        <input type="text" id="post_code" name="post_code" value="<?= htmlspecialchars($post_code) ?>"/>
-        <span class="error"><?= $errors['post_code'] ?? '' ?></span>
+        <input type="text" id="post_code" name="post_code" value="<?= htmlspecialchars($post_code, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['post_code'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="city">Miasto</label>
-        <input type="text" id="city" name="city" value="<?= htmlspecialchars($city) ?>"/>
-        <span class="error"><?= $errors['city'] ?? '' ?></span>
+        <input type="text" id="city" name="city" value="<?= htmlspecialchars($city, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['city'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <button type="submit" class="red_button"><?= $mode == 'address_edit' ? 'Zaktualizuj adres' : 'Dodaj adres' ?></button>

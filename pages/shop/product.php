@@ -14,15 +14,16 @@ $product = $product_result->fetch_assoc();
 $stmt->close();
 
 if ($product): ?>
-    <div class="product_page" id="product_<?php echo $product['product_id']; ?>">
-        <h2><?php echo htmlspecialchars($product['product_name']); ?></h2>
+    <div class="product_page" id="product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
+        <h2><?php echo htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8'); ?></h2>
         <hr/>
-        <img src="<?php echo htmlspecialchars($product['image_path']); ?>" alt="Zdjęcie Produktu"/>
+        <img src="<?php echo htmlspecialchars($product['image_path'], ENT_QUOTES, 'UTF-8'); ?>" alt="Zdjęcie Produktu"/>
         <hr/>
         <div class="product_price_info_container">
-            <h3>Cena: <?php echo number_format($product['price'], 2, ',', ' ') . ' zł'; ?></h3>
+            <h3>
+                Cena: <?php echo htmlspecialchars(number_format($product['price'], 2, ',', ' ') . ' zł', ENT_QUOTES, 'UTF-8'); ?></h3>
             <?php if ($product['stock_quantity'] != 0): ?>
-                <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo $product['product_id']; ?>#product_<?php echo $product['product_id']; ?>"
+                <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>#product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
                    class="product_link gray">Dodaj do koszyka</a>
             <?php else: ?>
                 <p class="product_unavailable">Produkt aktualnie niedostępny, skontaktuj się z nami.</p>
@@ -31,12 +32,12 @@ if ($product): ?>
         <hr/>
         <div class="product_description">
             <h3>Opis produktu:</h3></br>
-            <?php echo nl2br(htmlspecialchars($product['description'])); ?>
+            <?php echo nl2br(htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8')); ?>
         </div>
         <hr/>
         <div class="product_specification">
             <h3>Specyfikacja produktu:</h3></br>
-            <?php echo nl2br(htmlspecialchars($product['specification'])); ?>
+            <?php echo nl2br(htmlspecialchars($product['specification'], ENT_QUOTES, 'UTF-8')); ?>
         </div>
         <hr/>
     </div>

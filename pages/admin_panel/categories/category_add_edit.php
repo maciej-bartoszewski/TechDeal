@@ -7,7 +7,6 @@ $category_name = '';
 $mode = $_GET['subpage'] ?? null;
 $category_id = $_GET['category_id'] ?? null;
 
-
 // Pobranie danych o kategorii do edycji
 if ($mode == 'category_edit' && $category_id) {
     $stmt = $mysqli->prepare("SELECT category_name FROM categories WHERE category_id = ?");
@@ -49,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <form action="" method="POST">
     <div class="form_group">
         <label for="category_name">Nazwa kategorii</label>
-        <input type="text" id="category_name" name="category_name" value="<?= htmlspecialchars($category_name) ?>" required/>
-        <span class="error"><?= $errors['category_name'] ?? '' ?></span>
+        <input type="text" id="category_name" name="category_name" value="<?= htmlspecialchars($category_name, ENT_QUOTES, 'UTF-8') ?>" required/>
+        <span class="error"><?= htmlspecialchars($errors['category_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <button type="submit" class="red_button"><?= $mode == 'category_edit' ? 'Zaktualizuj' : 'Dodaj' ?></button>

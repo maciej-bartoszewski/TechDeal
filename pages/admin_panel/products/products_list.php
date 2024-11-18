@@ -39,7 +39,7 @@ $stmt->close();
 <form class="admin_search_container" method="GET" action="index.php">
     <input type="hidden" name="page" value="admin">
     <input type="hidden" name="subpage" value="products_list">
-    <input type="text" name="search_product" placeholder="Wyszukaj produkt" value="<?= htmlspecialchars($search_product) ?>"/>
+    <input type="text" name="search_product" placeholder="Wyszukaj produkt" value="<?= htmlspecialchars($search_product, ENT_QUOTES, 'UTF-8') ?>"/>
     <button class="search_btn" type="submit">Szukaj</button>
 </form>
 
@@ -51,21 +51,21 @@ $stmt->close();
             <div class="product_container">
                 <div class="product_info_img">
                     <div class="product_img">
-                        <img src="<?= htmlspecialchars($product['image_path']) ?>" alt="Obraz produktu"/>
+                        <img src="<?= htmlspecialchars($product['image_path'], ENT_QUOTES, 'UTF-8') ?>" alt="Obraz produktu"/>
                     </div>
                     <div class="product_info">
-                        <p>Produkt: <strong><?= htmlspecialchars($product['product_name']) ?></strong></p>
-                        <p>Kategoria: <strong><?= htmlspecialchars($product['category_name']) ?></strong></p>
-                        <p>Producent: <strong><?= htmlspecialchars($product['producer_name']) ?></strong></p>
-                        <p>Cena: <strong><?= htmlspecialchars($product['price']) ?> PLN</strong></p>
-                        <p>Stan magazynowy: <strong><?= htmlspecialchars($product['stock_quantity']) ?></strong></p>
+                        <p>Produkt: <strong><?= htmlspecialchars($product['product_name'], ENT_QUOTES, 'UTF-8') ?></strong></p>
+                        <p>Kategoria: <strong><?= htmlspecialchars($product['category_name'], ENT_QUOTES, 'UTF-8') ?></strong></p>
+                        <p>Producent: <strong><?= htmlspecialchars($product['producer_name'], ENT_QUOTES, 'UTF-8') ?></strong></p>
+                        <p>Cena: <strong><?= htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8') ?> PLN</strong></p>
+                        <p>Stan magazynowy: <strong><?= htmlspecialchars($product['stock_quantity'], ENT_QUOTES, 'UTF-8') ?></strong></p>
                     </div>
                 </div>
                 <div class="data_actions">
-                    <a href="index.php?page=admin&subpage=product_edit&product_id=<?= htmlspecialchars($product['product_id']) ?>"
+                    <a href="index.php?page=admin&subpage=product_edit&product_id=<?= htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8') ?>"
                        class="edit-btn">
                         <img src="assets/icons/edit.png" alt="Edytuj"/>Edytuj</a>
-                    <a href="pages/admin_panel/products/product_delete.php?id=<?= htmlspecialchars($product['product_id']) ?>"
+                    <a href="pages/admin_panel/products/product_delete.php?id=<?= htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8') ?>"
                        class="delete-btn">
                         <img src="assets/icons/delete.png" alt="Usuń"/> Usuń
                     </a>

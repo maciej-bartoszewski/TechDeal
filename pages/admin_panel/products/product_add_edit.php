@@ -90,8 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <select id="category_id" name="category_id" class="select_in_product" required>
             <option value="">Wybierz kategorię</option>
             <?php foreach ($categories as $category): ?>
-                <option value="<?= htmlspecialchars($category['category_id']) ?>" <?= $category_id == $category['category_id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($category['category_name']) ?>
+                <option value="<?= htmlspecialchars($category['category_id'], ENT_QUOTES, 'UTF-8') ?>" <?= $category_id == $category['category_id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($category['category_name'], ENT_QUOTES, 'UTF-8') ?>
                 </option>
             <?php endforeach; ?>
         </select>
@@ -101,44 +101,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <select id="producer_id" name="producer_id" class="select_in_product" required>
             <option value="">Wybierz producenta</option>
             <?php foreach ($producers as $producer): ?>
-                <option value="<?= htmlspecialchars($producer['producer_id']) ?>" <?= $producer_id == $producer['producer_id'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($producer['producer_name']) ?>
+                <option value="<?= htmlspecialchars($producer['producer_id'], ENT_QUOTES, 'UTF-8') ?>" <?= $producer_id == $producer['producer_id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($producer['producer_name'], ENT_QUOTES, 'UTF-8') ?>
                 </option>
             <?php endforeach; ?>
         </select>
     </div>
     <div class="form_group">
         <label for="product_name">Nazwa produktu</label>
-        <input type="text" id="product_name" name="product_name" value="<?= htmlspecialchars($product_name) ?>"/>
-        <span class="error"><?= $errors['product_name'] ?? '' ?></span>
+        <input type="text" id="product_name" name="product_name" value="<?= htmlspecialchars($product_name, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['product_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="form_group">
         <label for="price">Cena</label>
-        <input type="text" id="price" name="price" value="<?= htmlspecialchars($price) ?>"/>
-        <span class="error"><?= $errors['price'] ?? '' ?></span>
+        <input type="text" id="price" name="price" value="<?= htmlspecialchars($price, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['price'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="form_group">
         <label for="stock_quantity">Stan magazynowy</label>
-        <input type="number" id="stock_quantity" name="stock_quantity" value="<?= htmlspecialchars($stock_quantity) ?>"/>
-        <span class="error"><?= $errors['stock_quantity'] ?? '' ?></span>
+        <input type="number" id="stock_quantity" name="stock_quantity" value="<?= htmlspecialchars($stock_quantity, ENT_QUOTES, 'UTF-8') ?>"/>
+        <span class="error"><?= htmlspecialchars($errors['stock_quantity'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="form_group">
         <label for="image_path">Ścieżka do obrazu</label>
-        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path) ?>" required oninput="updateImagePreview()"/>
-        <span class="error"><?= $errors['image_path'] ?? '' ?></span>
+        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" required oninput="updateImagePreview()"/>
+        <span class="error"><?= htmlspecialchars($errors['image_path'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="form_group">
-        <img id="image_preview" src="<?= htmlspecialchars($image_path) ?>" alt="Podgląd obrazu"/>
+        <img id="image_preview" src="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" alt="Podgląd obrazu"/>
     </div>
     <div class="form_group">
         <label for="description">Opis</label>
-        <textarea id="description" name="description"><?= htmlspecialchars($description) ?></textarea>
-        <span class="error"><?= $errors['description'] ?? '' ?></span>
+        <textarea id="description" name="description"><?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?></textarea>
+        <span class="error"><?= htmlspecialchars($errors['description'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="form_group">
         <label for="specification">Specyfikacja</label>
-        <textarea id="specification" name="specification"><?= htmlspecialchars($specification) ?></textarea>
-        <span class="error"><?= $errors['specification'] ?? '' ?></span>
+        <textarea id="specification" name="specification"><?= htmlspecialchars($specification, ENT_QUOTES, 'UTF-8') ?></textarea>
+        <span class="error"><?= htmlspecialchars($errors['specification'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <button type="submit" class="red_button"><?= $mode == 'product_edit' ? 'Zaktualizuj' : 'Dodaj' ?></button>
 </form>

@@ -20,13 +20,13 @@ $result = $mysqli->query($query);
         <?php while ($category = $result->fetch_assoc()): ?>
             <div class="data_container">
                 <div class="data_info">
-                    <p>Kategoria: <strong><?= htmlspecialchars($category['category_name']) ?> </strong></p>
+                    <p>Kategoria: <strong><?= htmlspecialchars($category['category_name'], ENT_QUOTES, 'UTF-8') ?> </strong></p>
                 </div>
                 <div class="data_actions">
-                    <a href="index.php?page=admin&subpage=category_edit&category_id=<?= htmlspecialchars($category['category_id']) ?>"
+                    <a href="index.php?page=admin&subpage=category_edit&category_id=<?= htmlspecialchars($category['category_id'], ENT_QUOTES, 'UTF-8') ?>"
                        class="edit-btn">
                         <img src="assets/icons/edit.png" alt="Edytuj"/>Edytuj</a>
-                    <a href="pages/admin_panel/categories/category_delete.php?id=<?= htmlspecialchars($category['category_id']) ?>"
+                    <a href="pages/admin_panel/categories/category_delete.php?id=<?= htmlspecialchars($category['category_id'], ENT_QUOTES, 'UTF-8') ?>"
                        class="delete-btn">
                         <img src="assets/icons/delete.png" alt="Usuń"/> Usuń
                     </a>

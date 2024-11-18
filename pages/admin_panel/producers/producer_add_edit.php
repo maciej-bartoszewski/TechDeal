@@ -52,18 +52,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <form action="" method="POST">
     <div class="form_group">
         <label for="producer_name">Nazwa producenta</label>
-        <input type="text" id="producer_name" name="producer_name" value="<?= htmlspecialchars($producer_name) ?>" required/>
-        <span class="error"><?= $errors['producer_name'] ?? '' ?></span>
+        <input type="text" id="producer_name" name="producer_name" value="<?= htmlspecialchars($producer_name, ENT_QUOTES, 'UTF-8') ?>" required/>
+        <span class="error"><?= htmlspecialchars($errors['producer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="image_path">Ścieżka do obrazu</label>
-        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path) ?>" required oninput="updateImagePreview()"/>
-        <span class="error"><?= $errors['image_path'] ?? '' ?></span>
+        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" required oninput="updateImagePreview()"/>
+        <span class="error"><?= htmlspecialchars($errors['image_path'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
-        <img id="image_preview" src="<?= htmlspecialchars($image_path) ?>" alt="Podgląd obrazu"/>
+        <img id="image_preview" src="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" alt="Podgląd obrazu"/>
     </div>
 
     <button type="submit" class="red_button"><?= $mode == 'producer_edit' ? 'Zaktualizuj' : 'Dodaj' ?></button>

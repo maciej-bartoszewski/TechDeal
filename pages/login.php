@@ -101,14 +101,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <form action="index.php?page=login" onsubmit="return validateLogin()" method="POST">
         <div class="form_group">
             <label for="e-mail">E-mail</label>
-            <input type="email" id="e-mail" name="e-mail" value="<?= isset($email) ? htmlspecialchars($email) : '' ?>"/>
-            <span class="error"><?= $errors['email'] ?? '' ?></span>
+            <input type="email" id="e-mail" name="e-mail" value="<?= isset($email) ? htmlspecialchars($email, ENT_QUOTES, 'UTF-8') : '' ?>"/>
+            <span class="error"><?= htmlspecialchars($errors['email'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
         </div>
 
         <div class="form_group">
             <label for="password">Hasło</label>
             <input type="password" id="password" name="password"/>
-            <span class="error"><?= $errors['password'] ?? '' ?></span>
+            <span class="error"><?= htmlspecialchars($errors['password'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
         </div>
 
         <button type="submit" class="red_button">Logowanie</button>
