@@ -77,7 +77,7 @@ ob_start();
         } else {
             include('pages/admin_panel/users/users_list.php');
         }
-        echo '<script src="scripts/image_update.js"></script>';
+        echo '<script src="scripts/imageUpdate.js"></script>';
         ?>
     </div>
 </div>

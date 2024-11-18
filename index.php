@@ -115,12 +115,12 @@ include('includes/header.php');
                 break;
             case 'shop':
                 include('pages/shop/shop.php');
-                echo '<script src="scripts/open_sort_filters_mobile.js"></script>';
+                echo '<script src="scripts/openSortFiltersMobile.js"></script>';
                 break;
 
             case 'shopping_cart':
                 include('pages/shopping_cart/shopping_cart.php');
-                echo '<script src="scripts/change_address_payment.js"></script>';
+                echo '<script src="scripts/changeAddressPayment.js"></script>';
                 break;
 
             case 'admin':
