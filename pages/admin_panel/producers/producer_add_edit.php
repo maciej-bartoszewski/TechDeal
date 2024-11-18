@@ -49,16 +49,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <h3><?= $mode == 'producer_edit' ? 'Edytuj producenta' : 'Dodaj nowego producenta' ?></h3>
-<form action="" method="POST">
+<form action="" method="POST" onsubmit="return validateProducerAddEdit()">
     <div class="form_group">
         <label for="producer_name">Nazwa producenta</label>
-        <input type="text" id="producer_name" name="producer_name" value="<?= htmlspecialchars($producer_name, ENT_QUOTES, 'UTF-8') ?>" required/>
+        <input type="text" id="producer_name" name="producer_name" value="<?= htmlspecialchars($producer_name, ENT_QUOTES, 'UTF-8') ?>"/>
         <span class="error"><?= htmlspecialchars($errors['producer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="image_path">Ścieżka do obrazu</label>
-        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" required oninput="updateImagePreview()"/>
+        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" oninput="updateImagePreview()"/>
         <span class="error"><?= htmlspecialchars($errors['image_path'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 

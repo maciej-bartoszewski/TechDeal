@@ -31,32 +31,38 @@ ob_start();
                 include('pages/admin_panel/users/users_list.php');
             } else if ($subpage == 'user_add') {
                 include('pages/admin_panel/users/user_add.php');
+                echo '<script src="scripts/validation/validateUserAdd.js"></script>';
             } else if ($subpage == 'user_edit') {
                 include('pages/admin_panel/users/user_edit.php');
+                echo '<script src="scripts/validation/validateUserEdit.js"></script>';
             }
 
             else if ($subpage == 'products_list') {
                 include('pages/admin_panel/products/products_list.php');
             } else if ($subpage == 'product_add' || $subpage == 'product_edit') {
                 include('pages/admin_panel/products/product_add_edit.php');
+                echo '<script src="scripts/validation/validateProductAddEdit.js"></script>';
             }
 
             else if ($subpage == 'producers_list') {
                 include('pages/admin_panel/producers/producers_list.php');
             } else if ($subpage == 'producer_add' || $subpage == 'producer_edit') {
                 include('pages/admin_panel/producers/producer_add_edit.php');
+                echo '<script src="scripts/validation/validateProducerAddEdit.js"></script>';
             }
 
             else if ($subpage == 'payments_list') {
                 include('pages/admin_panel/payments/payments_list.php');
             } else if ($subpage == 'payment_add' || $subpage == 'payment_edit') {
                 include('pages/admin_panel/payments/payment_add_edit.php');
+                echo '<script src="scripts/validation/validatePaymentAddEdit.js"></script>';
             }
 
             else if ($subpage == 'categories_list') {
                 include('pages/admin_panel/categories/categories_list.php');
             } else if ($subpage == 'category_add' || $subpage == 'category_edit') {
                 include('pages/admin_panel/categories/category_add_edit.php');
+                echo '<script src="scripts/validation/validateCategoryAddEdit.js"></script>';
             }
 
             else if ($subpage == 'orders_list') {
@@ -71,6 +77,7 @@ ob_start();
         } else {
             include('pages/admin_panel/users/users_list.php');
         }
+        echo '<script src="scripts/image_update.js"></script>';
         ?>
     </div>
 </div>

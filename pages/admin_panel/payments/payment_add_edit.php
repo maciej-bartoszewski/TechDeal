@@ -50,16 +50,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <h3><?= $mode == 'payment_edit' ? 'Edytuj metodę płatności' : 'Dodaj nową metodę płatności' ?></h3>
-<form action="" method="POST">
+<form action="" method="POST" onsubmit="return validatePaymentAddEdit()">
     <div class="form_group">
         <label for="payment_method">Metoda płatności</label>
-        <input type="text" id="payment_method" name="payment_method" value="<?= htmlspecialchars($payment_method, ENT_QUOTES, 'UTF-8') ?>" required/>
+        <input type="text" id="payment_method" name="payment_method" value="<?= htmlspecialchars($payment_method, ENT_QUOTES, 'UTF-8') ?>"/>
         <span class="error"><?= htmlspecialchars($errors['payment_method'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 
     <div class="form_group">
         <label for="image_path">Ścieżka do obrazu</label>
-        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" required oninput="updateImagePreview()"/>
+        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" oninput="updateImagePreview()"/>
         <span class="error"><?= htmlspecialchars($errors['image_path'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 

@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phonePattern = '/^\d{9}$/';
     $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/';
 
-    // Validation
+    // Walidacja
     if (empty($first_name)) {
         $errors['first_name'] = 'Imię jest wymagane.';
     } elseif (!preg_match($namePattern, $first_name)) {
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!preg_match($emailPattern, $email)) {
         $errors['email'] = 'Niepoprawny adres e-mail.';
     } else {
-        // Check if email already exists
+        // Sprawdzenie, czy e-mail nie jest już zajęty
         $stmt_check_email = $mysqli->prepare("SELECT email FROM users WHERE email = ? AND user_id != ?");
         $stmt_check_email->bind_param("si", $email, $user_id);
         $stmt_check_email->execute();
@@ -74,12 +74,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['repeated_password'] = 'Hasła muszą być identyczne.';
     }
 
+    if (!isset($_POST['account_type']) || ($_POST['account_type'] !== '0' && $_POST['account_type'] !== '1')) {
+        $errors['account_type'] = 'Account type is required.';
+    }
+
     if (empty($errors)) {
         if (!empty($password)) {
+            // Zaktualizowanie dannych wraz z hasłem
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $mysqli->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, phone_number = ?, password = ?, is_admin = ? WHERE user_id = ?");
             $stmt->bind_param("ssssssi", $first_name, $last_name, $email, $phone_number, $hashed_password, $is_admin, $user_id);
         } else {
+            // Zaktualizowanie danych bez hasła
             $stmt = $mysqli->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, phone_number = ?, is_admin = ? WHERE user_id = ?");
             $stmt->bind_param("sssisi", $first_name, $last_name, $email, $phone_number, $is_admin, $user_id);
         }
@@ -94,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <h3>Edytuj użytkownika</h3>
-<form action="" method="POST">
+<form action="" method="POST" onsubmit="return validateUserEdit()">
     <div class="form_group">
         <label for="first_name">Imię</label>
         <input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars($first_name, ENT_QUOTES, 'UTF-8') ?>"/>
@@ -131,6 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="0" <?= $is_admin == 0 ? 'selected' : '' ?>>Użytkownik</option>
             <option value="1" <?= $is_admin == 1 ? 'selected' : '' ?>>Administrator</option>
         </select>
+        <span class="error"><?= htmlspecialchars($errors['account_type'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <button type="submit" class="red_button">Zaktualizuj</button>
 </form>

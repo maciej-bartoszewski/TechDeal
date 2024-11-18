@@ -45,10 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <h3><?= $mode == 'category_edit' ? 'Edytuj kategorię' : 'Dodaj nową kategorię' ?></h3>
-<form action="" method="POST">
+<form action="" method="POST" onsubmit="return validateCategoryAddEdit()">
     <div class="form_group">
         <label for="category_name">Nazwa kategorii</label>
-        <input type="text" id="category_name" name="category_name" value="<?= htmlspecialchars($category_name, ENT_QUOTES, 'UTF-8') ?>" required/>
+        <input type="text" id="category_name" name="category_name" value="<?= htmlspecialchars($category_name, ENT_QUOTES, 'UTF-8') ?>"/>
         <span class="error"><?= htmlspecialchars($errors['category_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
 

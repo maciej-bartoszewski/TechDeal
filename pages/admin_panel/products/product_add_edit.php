@@ -8,6 +8,7 @@ $category_id = $producer_id = null;
 $mode = $_GET['subpage'] ?? null;
 $product_id = $_GET['product_id'] ?? null;
 
+// Pobranie informacji o kategoriach
 $categories = [];
 $category_stmt = $mysqli->prepare("SELECT category_id, category_name FROM categories");
 $category_stmt->execute();
@@ -17,6 +18,7 @@ while ($row = $category_result->fetch_assoc()) {
 }
 $category_stmt->close();
 
+// Pobranie informacji o producentach
 $producers = [];
 $producer_stmt = $mysqli->prepare("SELECT producer_id, producer_name FROM producers");
 $producer_stmt->execute();
@@ -26,6 +28,7 @@ while ($row = $producer_result->fetch_assoc()) {
 }
 $producer_stmt->close();
 
+// Jeśli edytujemy produkt, pobieramy jego dane
 if ($mode == 'product_edit' && $product_id) {
     $stmt = $mysqli->prepare("SELECT category_id, producer_id, product_name, description, specification, price, stock_quantity, image_path FROM products WHERE product_id = ?");
     $stmt->bind_param("i", $product_id);
@@ -45,6 +48,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stock_quantity = $_POST['stock_quantity'];
     $image_path = trim($_POST['image_path']);
 
+    // Walidacja
+    if (empty($category_id)) {
+        $errors['category_id'] = 'Kategoria jest wymagana.';
+    }
+    if (empty($producer_id)) {
+        $errors['producer_id'] = 'Producent jest wymagany.';
+    }
+
     if (empty($product_name)) {
         $errors['product_name'] = 'Nazwa produktu jest wymagana.';
     }
@@ -54,10 +65,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($specification)) {
         $errors['specification'] = 'Specyfikacja produktu jest wymagana.';
     }
-    if (empty($price) || !is_numeric($price)) {
+    if (empty($price) || !is_numeric($price) || $price < 0) {
         $errors['price'] = 'Cena produktu jest wymagana i musi być liczbą.';
     }
-    if (empty($stock_quantity) || !is_numeric($stock_quantity)) {
+    if (empty($stock_quantity) || !is_numeric($stock_quantity) || $stock_quantity < 0) {
         $errors['stock_quantity'] = 'Stan magazynowy jest wymagany i musi być liczbą.';
     }
     if (empty($image_path)) {
@@ -65,11 +76,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($errors)) {
+        // Jesli edytujemy produkt, aktualizujemy dane
         if ($mode == 'product_edit' && $product_id) {
             $stmt = $mysqli->prepare("UPDATE products SET category_id = ?, producer_id = ?, product_name = ?, description = ?, specification = ?, price = ?, stock_quantity = ?, image_path = ? WHERE product_id = ?");
             $stmt->bind_param("iisssdiss", $category_id, $producer_id, $product_name, $description, $specification, $price, $stock_quantity, $image_path, $product_id);
             $_SESSION['info_message'] = 'Zaktualizowano produkt.';
         } else {
+            // W przeciwnym wypadku dodajemy nowy produkt
             $stmt = $mysqli->prepare("INSERT INTO products (category_id, producer_id, product_name, description, specification, price, stock_quantity, image_path, added_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
             $stmt->bind_param("iisssdis", $category_id, $producer_id, $product_name, $description, $specification, $price, $stock_quantity, $image_path);
             $_SESSION['info_message'] = 'Dodano nowy produkt.';
@@ -84,10 +97,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <h3><?= $mode == 'product_edit' ? 'Edytuj produkt' : 'Dodaj nowy produkt' ?></h3>
-<form action="" method="POST">
+<form action="" method="POST" onsubmit="return validateProductAddEdit()">
     <div class="form_group">
         <label for="category_id">Kategoria</label>
-        <select id="category_id" name="category_id"required>
+        <select id="category_id" name="category_id">
             <option value="">Wybierz kategorię</option>
             <?php foreach ($categories as $category): ?>
                 <option value="<?= htmlspecialchars($category['category_id'], ENT_QUOTES, 'UTF-8') ?>" <?= $category_id == $category['category_id'] ? 'selected' : '' ?>>
@@ -95,10 +108,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </option>
             <?php endforeach; ?>
         </select>
+        <span class="error"><?= htmlspecialchars($errors['category_id'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="form_group">
         <label for="producer_id">Producent</label>
-        <select id="producer_id" name="producer_id" required>
+        <select id="producer_id" name="producer_id">
             <option value="">Wybierz producenta</option>
             <?php foreach ($producers as $producer): ?>
                 <option value="<?= htmlspecialchars($producer['producer_id'], ENT_QUOTES, 'UTF-8') ?>" <?= $producer_id == $producer['producer_id'] ? 'selected' : '' ?>>
@@ -106,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </option>
             <?php endforeach; ?>
         </select>
+        <span class="error"><?= htmlspecialchars($errors['producer_id'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="form_group">
         <label for="product_name">Nazwa produktu</label>
@@ -124,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="form_group">
         <label for="image_path">Ścieżka do obrazu</label>
-        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" required oninput="updateImagePreview()"/>
+        <input type="text" id="image_path" name="image_path" value="<?= htmlspecialchars($image_path, ENT_QUOTES, 'UTF-8') ?>" oninput="updateImagePreview()"/>
         <span class="error"><?= htmlspecialchars($errors['image_path'] ?? '', ENT_QUOTES, 'UTF-8') ?></span>
     </div>
     <div class="form_group">
