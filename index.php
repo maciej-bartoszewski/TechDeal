@@ -126,7 +126,6 @@ include('includes/header.php');
             case 'admin':
                 if (isset($_SESSION['is_admin'])) {
                     include('pages/admin_panel/admin.php');
-                    echo '<script src="scripts/image_update.js"></script>';
                 } else {
                     header("Location: index.php");
                     exit;
