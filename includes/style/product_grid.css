@@ -64,6 +64,7 @@
   justify-content: center;
   line-height: 1;
   height: 50px;
+  cursor: pointer;
 }
 
 .gray {

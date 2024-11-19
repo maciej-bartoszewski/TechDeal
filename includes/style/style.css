@@ -226,6 +226,28 @@ form {
   align-items: center;
   gap: 1rem;
 }
+button {
+  background: none;
+  border: none;
+}
+
+.abutton {
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  border: none;
+  background: none;
+  color: #eb2d29;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.abutton img {
+  width: 25px;
+}
 
 .form_group {
   display: flex;
@@ -268,6 +290,10 @@ form {
     height: 350px;
   }
 
+  .abutton {
+    font-size: 0.9rem;
+  }
+
   .content_container {
     padding-top: 5vh;
     padding-bottom: 5vh;
@@ -300,6 +326,10 @@ form {
   }
 
   textarea {
+    font-size: 0.8rem;
+  }
+
+  .abutton {
     font-size: 0.8rem;
   }
 

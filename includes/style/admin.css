@@ -124,6 +124,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: none;
+    cursor: pointer;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
 }
 
 .edit-btn, .delete-btn, .add-btn, .order_delete_btn {
@@ -213,6 +217,10 @@
     .search_btn {
         padding: 5px 15px;
         font-size: 0.7rem;
+    }
+
+    .data_actions, .edit-btn, .delete-btn, .add-btn, .order_delete_btn{
+        font-size: 0.8rem;
     }
 
     /* PRODUCTS */
