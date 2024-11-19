@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $subpage = $_GET['subpage'] ?? '';
 $category_map = [
     'smartphones' => 'Smartfony',
@@ -139,8 +143,11 @@ $stmt_product->close();
                                 <a href="index.php?page=shop&subpage=product&id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
                                    class="product_link">Dowiedz się więcej</a>
                                 <?php if ($product['stock_quantity'] != 0): ?>
-                                    <a href="pages/shopping_cart/add_to_cart.php?id=<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>#product_<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
-                                       class="product_link gray add-to-cart">Dodaj do koszyka</a>
+                                    <form method="POST" action="pages/shopping_cart/add_to_cart.php">
+                                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                                        <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
+                                        <button type="submit" class="product_link gray add-to-cart">Dodaj do koszyka</button>
+                                    </form>
                                 <?php endif; ?>
                             </div>
                         </div>

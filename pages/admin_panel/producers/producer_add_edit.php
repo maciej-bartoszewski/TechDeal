@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [];
 $producer_name = $image_path = '';
 $mode = $_GET['subpage'] ?? null;
@@ -18,6 +22,12 @@ if ($mode == 'producer_edit' && $producer_id) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
     $producer_name = trim($_POST['producer_name']);
     $image_path = trim($_POST['image_path']);
 
@@ -50,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h3><?= $mode == 'producer_edit' ? 'Edytuj producenta' : 'Dodaj nowego producenta' ?></h3>
 <form action="" method="POST" onsubmit="return validateProducerAddEdit()">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
     <div class="form_group">
         <label for="producer_name">Nazwa producenta</label>
         <input type="text" id="producer_name" name="producer_name" value="<?= htmlspecialchars($producer_name, ENT_QUOTES, 'UTF-8') ?>"/>

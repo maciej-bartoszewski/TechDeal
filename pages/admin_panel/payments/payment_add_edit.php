@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [];
 $payment_method = $image_path = '';
 $mode = $_GET['subpage'] ?? null;
@@ -18,6 +22,12 @@ if ($mode == 'payment_edit' && $payment_id) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
     $payment_method = trim($_POST['payment_method']);
     $image_path = trim($_POST['image_path']);
 
@@ -51,6 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h3><?= $mode == 'payment_edit' ? 'Edytuj metodę płatności' : 'Dodaj nową metodę płatności' ?></h3>
 <form action="" method="POST" onsubmit="return validatePaymentAddEdit()">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
     <div class="form_group">
         <label for="payment_method">Metoda płatności</label>
         <input type="text" id="payment_method" name="payment_method" value="<?= htmlspecialchars($payment_method, ENT_QUOTES, 'UTF-8') ?>"/>

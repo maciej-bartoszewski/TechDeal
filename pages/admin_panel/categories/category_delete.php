@@ -3,8 +3,14 @@ session_start();
 require '../../../db_connect.php';
 global $mysqli;
 
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $category_id = $_GET['id'];
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
+}
+
+if (isset($_POST['category_id']) && is_numeric($_POST['category_id'])) {
+    $category_id = $_POST['category_id'];
 
     $query = "DELETE FROM categories WHERE category_id = ?";
     $stmt = $mysqli->prepare($query);

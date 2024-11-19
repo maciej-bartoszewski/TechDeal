@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $user_id = $_SESSION['user_id'];
 
 // Pobranie informacji o adresach użytkownika
@@ -52,9 +56,13 @@ $stmt->bind_result($address_id, $country, $street, $building_number, $apartment_
                     </a>
                 </div>
                 <div class="action">
-                    <a href="/techdeal/pages/account/address/address_delete.php?address_id=<?= htmlspecialchars($address_id, ENT_QUOTES, 'UTF-8') ?>">
-                        <img src="assets/icons/delete.png" alt="Ikonka usuwania"/>Usuń
-                    </a>
+                    <form method="POST" action="/techdeal/pages/account/address/address_delete.php">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="hidden" name="address_id" value="<?= htmlspecialchars($address_id, ENT_QUOTES, 'UTF-8') ?>">
+                        <button type="submit" class="abutton">
+                            <img src="assets/icons/delete.png" alt="Ikonka usuwania"/>Usuń
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

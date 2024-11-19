@@ -2,10 +2,20 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [];
 $first_name = $last_name = $email = $phone_number = $password = $repeated_password = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
     $first_name = trim($_POST['first_name']);
     $last_name = trim($_POST['last_name']);
     $email = trim($_POST['e-mail']);
@@ -98,6 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Zarejestruj się</h2>
 
     <form action="index.php?page=register" onsubmit="return validateRegistration()" method="POST">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
         <div class="form_group">
             <label for="first_name">Imię</label>
             <input type="text" id="first_name" name="first_name"

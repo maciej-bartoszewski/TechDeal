@@ -3,7 +3,13 @@ session_start();
 require '../../db_connect.php';
 global $mysqli;
 
-$product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+    echo '<script>window.history.go(-1);</script>';
+    exit;
+}
+
+$product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
 $quantity = 1;
 
 if (isset($_SESSION['user_id'])) {
@@ -61,3 +67,4 @@ if (isset($_SESSION['user_id'])) {
 
 echo '<script>window.history.go(-1);</script>';
 exit;
+?>

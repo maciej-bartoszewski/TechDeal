@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [];
 $country = $street = $building_number = $apartment_number = $post_code = $city = '';
 $user_id = $_SESSION['user_id'];
@@ -20,6 +24,12 @@ if ($mode == 'address_edit' && $address_id) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
     $country = trim($_POST['country']);
     $street = trim($_POST['street']);
     $building_number = $_POST['building_number'];
@@ -80,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h3><?= $mode == 'address_edit' ? 'Edytuj adres' : 'Dodaj nowy adres' ?></h3>
 <form action="" method="POST" onsubmit="return validateAddress()">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
     <div class="form_group">
         <label for="country">Kraj</label>
         <input type="text" id="country" name="country" value="<?= htmlspecialchars($country, ENT_QUOTES, 'UTF-8') ?>"/>

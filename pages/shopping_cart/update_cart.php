@@ -3,6 +3,12 @@ session_start();
 require '../../db_connect.php';
 global $mysqli;
 
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
+}
+
 if (isset($_POST['quantity_decrease']) || isset($_POST['quantity_increase'])) {
     $productId = intval($_POST['product_id']);
     $quantity = intval($_POST['quantity']);
@@ -29,11 +35,19 @@ if (isset($_POST['quantity_decrease']) || isset($_POST['quantity_increase'])) {
         $quantity_change = false;
         $quantity_max_error = true;
     }
-
     if ($quantity <= 0) {
         // Usuń produkt z koszyka
-        header("Location: delete_cart_item.php?id=$productId");
-        exit();
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            $stmt = $mysqli->prepare("DELETE FROM cart_items WHERE product_id = ? AND cart_id = (SELECT cart_id FROM carts WHERE user_id = ?)");
+            $stmt->bind_param('ii', $productId, $user_id);
+            $stmt->execute();
+        } else {
+            if (isset($_SESSION['cart'][$productId])) {
+                unset($_SESSION['cart'][$productId]);
+            }
+        }
+        $_SESSION['info_message'] = 'Usunięto produkt z koszyka.';
     } else {
         // Aktualizacja ilości produktu
         if (isset($_SESSION['user_id'])) {
@@ -57,7 +71,6 @@ if (isset($_POST['quantity_decrease']) || isset($_POST['quantity_increase'])) {
         }
     }
 }
-
 
 header('Location: ' . $_SERVER['HTTP_REFERER']);
 exit();

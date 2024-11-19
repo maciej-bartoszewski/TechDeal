@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $search_user = $_GET['search_user'] ?? '';
 
 // Pobranie informacji o użytkownikach z bazy danych
@@ -56,9 +60,13 @@ $stmt->close();
                     <a href="index.php?page=admin&subpage=user_edit&user_id=<?= htmlspecialchars($user['user_id'], ENT_QUOTES, 'UTF-8') ?>" class="edit-btn">
                         <img src="assets/icons/edit.png" alt="Edytuj"/> Edytuj
                     </a>
-                    <a href="pages/admin_panel/users/user_delete.php?user_id=<?= htmlspecialchars($user['user_id'], ENT_QUOTES, 'UTF-8') ?>" class="delete-btn">
-                        <img src="assets/icons/delete.png" alt="Usuń"/> Usuń
-                    </a>
+                    <form method="POST" action="pages/admin_panel/users/user_delete.php" class="delete-form">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                        <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['user_id'], ENT_QUOTES, 'UTF-8') ?>">
+                        <button type="submit" class="delete-btn">
+                            <img src="assets/icons/delete.png" alt="Usuń"/> Usuń
+                        </button>
+                    </form>
                 </div>
             </div>
         <?php endwhile; ?>

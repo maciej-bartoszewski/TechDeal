@@ -3,8 +3,14 @@ session_start();
 require '../../../db_connect.php';
 global $mysqli;
 
-if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
-    $user_id = $_GET['user_id'];
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
+}
+
+if (isset($_POST['user_id']) && is_numeric($_POST['user_id'])) {
+    $user_id = $_POST['user_id'];
 
     try {
         $query_user = "DELETE FROM users WHERE user_id = ?";

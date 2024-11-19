@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [];
 $category_name = '';
 $mode = $_GET['subpage'] ?? null;
@@ -18,6 +22,12 @@ if ($mode == 'category_edit' && $category_id) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
     $category_name = trim($_POST['category_name']);
 
     if (empty($category_name)) {
@@ -46,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h3><?= $mode == 'category_edit' ? 'Edytuj kategorię' : 'Dodaj nową kategorię' ?></h3>
 <form action="" method="POST" onsubmit="return validateCategoryAddEdit()">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
     <div class="form_group">
         <label for="category_name">Nazwa kategorii</label>
         <input type="text" id="category_name" name="category_name" value="<?= htmlspecialchars($category_name, ENT_QUOTES, 'UTF-8') ?>"/>

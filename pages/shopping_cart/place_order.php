@@ -3,6 +3,12 @@ session_start();
 require '../../db_connect.php';
 global $mysqli;
 
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
+}
+
 $user_id = $_SESSION['user_id'];
 $payment_id = $_POST['payment_id'] ?? null;
 $total_price = $_POST['total_price'] ?? null;

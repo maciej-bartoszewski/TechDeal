@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [];
 $product_name = $description = $specification = $price = $stock_quantity = $image_path = '';
 $category_id = $producer_id = null;
@@ -39,6 +43,12 @@ if ($mode == 'product_edit' && $product_id) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
     $category_id = $_POST['category_id'];
     $producer_id = $_POST['producer_id'];
     $product_name = trim($_POST['product_name']);
@@ -98,6 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h3><?= $mode == 'product_edit' ? 'Edytuj produkt' : 'Dodaj nowy produkt' ?></h3>
 <form action="" method="POST" onsubmit="return validateProductAddEdit()">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
     <div class="form_group">
         <label for="category_id">Kategoria</label>
         <select id="category_id" name="category_id">

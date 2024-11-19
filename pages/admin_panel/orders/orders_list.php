@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $search_order_id = $_GET['order_id'] ?? '';
 
 // Przygotowywanie zapytania do bazy
@@ -80,8 +84,13 @@ while ($order = $result->fetch_assoc()) {
                             <h4><a class="order_details_btn"
                                href="index.php?page=admin&subpage=order_details&order_id=<?= htmlspecialchars($order_id, ENT_QUOTES, 'UTF-8') ?>">Szczegóły
                                 zamówienia</a></h4>
-                            <h4><a class="order_delete_btn"
-                                   href="pages/admin_panel/orders/order_delete.php?order_id=<?= htmlspecialchars($order_id, ENT_QUOTES, 'UTF-8') ?>"><img src="assets/icons/delete.png" alt="Usuń"/> Usuń zamówienie</a></h4>
+                            <form method="POST" action="pages/admin_panel/orders/order_delete.php">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                                <input type="hidden" name="order_id" value="<?= htmlspecialchars($order_id, ENT_QUOTES, 'UTF-8') ?>">
+                                <button type="submit" class="order_delete_btn">
+                                    <img src="assets/icons/delete.png" alt="Usuń"/> <h4>Usuń zamówienie</h4>
+                                </button>
+                            </form>
                         </div>
                         <h4>Łącznie: <?= htmlspecialchars(number_format($order['total_price'], 2, ',', ' '), ENT_QUOTES, 'UTF-8') ?>zł</h4>
                     </div>

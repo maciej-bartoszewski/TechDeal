@@ -3,8 +3,14 @@ session_start();
 require '../../../db_connect.php';
 global $mysqli;
 
-if (isset($_GET['order_id']) && is_numeric($_GET['order_id'])) {
-    $order_id = $_GET['order_id'];
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
+}
+
+if (isset($_POST['order_id']) && is_numeric($_POST['order_id'])) {
+    $order_id = $_POST['order_id'];
 
     try {
         // Usuwanie produktów z zamówienia

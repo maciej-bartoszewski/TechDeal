@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $cartItems = [];
 
 // Użytkownik zalogowany
@@ -77,6 +81,7 @@ foreach ($cartItems as $item) {
                     </div>
                     <div class="right_product_info_container">
                         <form class="quantity_container" method="POST" action="pages/shopping_cart/update_cart.php">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
                             <input type="hidden" name="product_id"
                                    value="<?php echo htmlspecialchars($item['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
 
@@ -95,9 +100,13 @@ foreach ($cartItems as $item) {
                             <p class="single_item_price">za
                                 sztukę <?php echo htmlspecialchars(number_format($item['price'], 2, ',', ' ') . ' zł', ENT_QUOTES, 'UTF-8'); ?></p>
                         </div>
-                        <a href="pages/shopping_cart/delete_cart_item.php?id=<?php echo htmlspecialchars($item['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
-                            <img class="delete_icon" src="assets/icons/delete_gray.png" alt="Ikona usuwania"/>
-                        </a>
+                        <form method="POST" action="pages/shopping_cart/delete_cart_item.php">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+                            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($item['product_id'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <button type="submit">
+                                <img class="delete_icon" src="assets/icons/delete_gray.png" alt="Ikona usuwania"/>
+                            </button>
+                        </form>
                     </div>
                 </div>
             <?php endforeach; ?>

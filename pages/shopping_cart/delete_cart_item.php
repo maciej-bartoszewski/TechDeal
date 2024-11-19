@@ -3,8 +3,14 @@ session_start();
 require '../../db_connect.php';
 global $mysqli;
 
-if (isset($_GET['id'])) {
-    $itemId = (int)$_GET['id'];
+if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit;
+}
+
+if (isset($_POST['product_id'])) {
+    $itemId = (int)$_POST['product_id'];
 
     // Usunięcie produktu z bazy danych - użytkownik zalogowany
     if (isset($_SESSION['user_id'])) {
@@ -13,7 +19,7 @@ if (isset($_GET['id'])) {
         $stmt->bind_param('ii', $itemId, $user_id);
         $stmt->execute();
     }
-    // Usunięcie produktu z sesji - użytkwonik niezalogowany
+    // Usunięcie produktu z sesji - użytkownik niezalogowany
     else {
         if (isset($_SESSION['cart'][$itemId])) {
             unset($_SESSION['cart'][$itemId]);

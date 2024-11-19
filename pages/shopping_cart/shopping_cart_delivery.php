@@ -2,6 +2,10 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $user_id = $_SESSION['user_id'];
 
 // Pobranie informacji o adresach użytkownika z bazy
@@ -146,6 +150,7 @@ foreach ($cartItems as $item) {
             </div>
         </div>
         <form method="POST" action="pages/shopping_cart/place_order.php">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
             <input type="hidden" name="total_price" value="<?= htmlspecialchars($totalPrice, ENT_QUOTES, 'UTF-8') ?>">
             <input type="hidden" name="address_id" id="selected_address_id"
                    value="<?= htmlspecialchars($default_address_id, ENT_QUOTES, 'UTF-8') ?>">

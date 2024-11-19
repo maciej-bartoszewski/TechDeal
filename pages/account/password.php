@@ -2,11 +2,21 @@
 require 'db_connect.php';
 global $mysqli;
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $errors = [];
 $user_id = $_SESSION['user_id'];
 $current_password = $new_password = $repeated_new_password = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['error_message'] = 'Błędny CSRF token, spróbuj ponownie.';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
     $current_password = trim($_POST['current_password']);
     $new_password = trim($_POST['new_password']);
     $repeated_new_password = trim($_POST['repeated_new_password']);
@@ -54,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <h3>Zmień hasło</h3>
 <form action="" onsubmit="return validatePasswordChange()" method="POST">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
     <div class="form_group">
         <label for="current_password">Aktualne hasło</label>
         <input type="password" id="current_password" name="current_password"/>
