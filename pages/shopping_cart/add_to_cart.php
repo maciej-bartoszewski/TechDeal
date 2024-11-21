@@ -20,8 +20,10 @@ if (isset($_SESSION['user_id'])) {
     $cart_query = $mysqli->prepare("SELECT cart_id FROM carts WHERE user_id = ? LIMIT 1");
     $cart_query->bind_param("i", $user_id);
     $cart_query->execute();
-    $cart_result = $cart_query->get_result()->fetch_assoc();
-    $cart_id = $cart_result['cart_id'];
+    $cart_id = null;
+    $cart_query->bind_result($cart_id);
+    $cart_query->fetch();
+    $cart_query->close();
 
     // Sprawdzenie, czy produkt jest w koszyku
     $check_item_query = $mysqli->prepare("SELECT quantity FROM cart_items WHERE cart_id = ? AND product_id = ?");

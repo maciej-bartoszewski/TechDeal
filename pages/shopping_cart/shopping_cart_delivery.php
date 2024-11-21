@@ -87,7 +87,6 @@ foreach ($cartItems as $item) {
             </div>
             <?php foreach ($addresses as $index => $address): ?>
                 <div class="address <?= $index === 0 ? 'active' : 'non_active' ?>"
-                     data-address-id="<?= htmlspecialchars($address['address_id'], ENT_QUOTES, 'UTF-8') ?>"
                      onclick="saveAddress(<?= htmlspecialchars($address['address_id'], ENT_QUOTES, 'UTF-8') ?>, this)">
                     <div class="single_info">
                         <h4>Kraj:</h4>
@@ -121,7 +120,6 @@ foreach ($cartItems as $item) {
         <div class="payment_methods">
             <?php foreach ($payment_methods as $index => $payment): ?>
                 <div class="payment_method <?= $index === 0 ? 'active' : 'non_active' ?>"
-                     data-payment-id="<?= htmlspecialchars($payment['payment_id'], ENT_QUOTES, 'UTF-8') ?>"
                      onclick="savePayment(<?= htmlspecialchars($payment['payment_id'], ENT_QUOTES, 'UTF-8') ?>, this)">
                     <img src="<?= htmlspecialchars($payment['image_path'], ENT_QUOTES, 'UTF-8') ?>"
                          alt="<?= htmlspecialchars($payment['payment_method'], ENT_QUOTES, 'UTF-8') ?>"/>

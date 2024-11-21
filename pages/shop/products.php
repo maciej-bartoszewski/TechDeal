@@ -55,7 +55,7 @@ $sort_options = [
     'name_desc' => 'p.product_name DESC',
     'newest' => 'p.product_name ASC'
 ];
-$sort_query = 'ORDER BY ' . ($sort_options[$sort] ?? $sort_options['name_asc']);
+$sort_query = 'ORDER BY ' . $sort_options[$sort];
 
 // Pobranie danych dotyczących produktów z ustawionymi filtrami
 $product_query = "

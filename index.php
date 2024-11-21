@@ -72,13 +72,13 @@ include('includes/header.php');
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             <?php if (isset($_SESSION['info_message'])): ?>
-            showAlert("<?php echo $_SESSION['info_message']; ?>", "info");
-            <?php unset($_SESSION['info_message']); ?>
+                showAlert("<?php echo $_SESSION['info_message']; ?>", "info");
+                <?php unset($_SESSION['info_message']); ?>
             <?php endif; ?>
 
             <?php if (isset($_SESSION['error_message'])): ?>
-            showAlert("<?php echo $_SESSION['error_message']; ?>", "error");
-            <?php unset($_SESSION['error_message']); ?>
+                showAlert("<?php echo $_SESSION['error_message']; ?>", "error");
+                <?php unset($_SESSION['error_message']); ?>
             <?php endif; ?>
         });
     </script>

@@ -22,7 +22,6 @@ if (isset($_POST['quantity_decrease']) || isset($_POST['quantity_increase'])) {
     $product = $product_result->fetch_assoc();
     $maxQuantity = $product['stock_quantity'];
 
-    $quantity_change = true;
     $quantity_max_error = false;
     if (isset($_POST['quantity_decrease'])) {
         $quantity -= 1;
@@ -32,7 +31,6 @@ if (isset($_POST['quantity_decrease']) || isset($_POST['quantity_increase'])) {
     }
     if ($quantity > $maxQuantity) {
         $quantity = $maxQuantity;
-        $quantity_change = false;
         $quantity_max_error = true;
     }
     if ($quantity <= 0) {
@@ -52,12 +50,13 @@ if (isset($_POST['quantity_decrease']) || isset($_POST['quantity_increase'])) {
         // Aktualizacja ilości produktu
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
-            $cart_query = $mysqli->prepare("SELECT cart_id FROM carts WHERE user_id = ?");
+            $cart_query = $mysqli->prepare("SELECT cart_id FROM carts WHERE user_id = ? LIMIT 1");
             $cart_query->bind_param("i", $user_id);
             $cart_query->execute();
-            $cart_result = $cart_query->get_result();
-
-            $cart_id = $cart_result->fetch_assoc()['cart_id'];
+            $cart_id = null;
+            $cart_query->bind_result($cart_id);
+            $cart_query->fetch();
+            $cart_query->close();
             $update_quantity_query = $mysqli->prepare("UPDATE cart_items SET quantity = ? WHERE cart_id = ? AND product_id = ?");
             $update_quantity_query->bind_param("iii", $quantity, $cart_id, $productId);
             $update_quantity_query->execute();

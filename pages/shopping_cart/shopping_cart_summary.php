@@ -70,9 +70,7 @@ foreach ($cartItems as $item) {
                 <?php
                 $itemTotalPrice = (float)$item['price'] * (int)$item['quantity'];
                 ?>
-                <div class="product" data-price="<?php echo htmlspecialchars($item['price'], ENT_QUOTES, 'UTF-8'); ?>"
-                     data-product-id="<?php echo htmlspecialchars($item['product_id'], ENT_QUOTES, 'UTF-8'); ?>"
-                     data-stock-quantity="<?php echo htmlspecialchars($item['stock_quantity'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                <div class="product">
                     <div class="cart_product_info">
                         <img class="cart_product_img"
                              src="<?php echo htmlspecialchars($item['image_path'], ENT_QUOTES, 'UTF-8'); ?>"
@@ -93,8 +91,7 @@ foreach ($cartItems as $item) {
                         </form>
 
                         <div class="price_info">
-                            <h4 class="item_price"
-                                data-item-total="<?php echo htmlspecialchars(number_format($itemTotalPrice, 2, '.', ''), ENT_QUOTES, 'UTF-8'); ?>">
+                            <h4 class="item_price">
                                 <?php echo htmlspecialchars(number_format($itemTotalPrice, 2, ',', ' ') . ' zł', ENT_QUOTES, 'UTF-8'); ?>
                             </h4>
                             <p class="single_item_price">za
